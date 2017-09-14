@@ -1,4 +1,5 @@
 import tweepy
+import datetime
 from tweepy import OAuthHandler
 
 consumer_key = 'DHjYxfSwthP3CDCsoi2NAD1LD'
@@ -9,28 +10,32 @@ access_secret = '3ZuxhuVRrpczjUA3wsnq45Yt9zgeRZ2U7wbYiKPVovDhl'
 
 auth = OAuthHandler(consumer_key,consumer_secret)
 auth.set_access_token(access_token,access_secret)
+#api = tweepy.API(auth,wait_on_rate_limit = True)
 api = tweepy.API(auth)
-
-#status = "HAHAHHA"
-#api.update_status(status=status)
-#data = api.search('Bruno Mars',['ENG'])
-#print(data[0])
-#print(api.search('Bruno Mars'))
-
-#for status in tweepy.Cursor(api.home_timeline).items(10):
-#   print(status.text)
+market=['$AAPL','$TXT','$GOOGL','$STZ','$GRMN','$CUTERA','$ULTA','$FEYE','$DLX','$T','$DISCA','$ABT','$BDX','$CVS','$XOM','$JNJ','$LOW','$MSFT','$SFM','$UTX']
 
 
 
-market=['$AAPL']
-data = dict()
-contents = list()
-print(api.rate_limit_status())
-cursor = tweepy.Cursor(api.search,q=market[0], count=10, lang='en')
-for item in cursor.items():
-	contents.append(data.text)
-	contents.append(favorite_count)
-	data[data.id] = 
+
+
+
+
+while True:
+	try:
+		for i in range(0,len(market)):
+			cursor = tweepy.Cursor(api.search, q=market[i], count=100, lang='en')
+			filename = datetime.datetime.now().ctime() + market[i] + ".txt"
+			name = 'DataSets/' + filename
+			fileWriter = open(name,"w")
+			for item in cursor.items():
+				fileWriter.write(str(item))
+				fileWriter.write("\n")
+			fileWriter.close()	
+	except tweepy.error.TweepError as e:
+		print("Exceeded")
+		
+
+
 #for item in cursor.items():
 #	print(item.text)
 	#print(item)
