@@ -16,7 +16,7 @@ auth.set_access_token(access_token,access_secret)
 class StdOutListener(StreamListener):
     def on_data(self,data):
         #print(data)
-        print(type(data))
+        #print(type(data))
         #tweet = json.loads(data)
         dbconnect.connect(data)
         #dbconnect.connect(json.dumps(tweet._json))
@@ -27,4 +27,4 @@ class StdOutListener(StreamListener):
 
 l = StdOutListener()
 stream = Stream(auth,l)
-stream.filter(track=['$AAPL','Apple or $AAPL','MACOS','Iphone'])
+stream.filter(track=['$AAPL','Apple or $AAPL','MACOS','Iphone'],languages=['en'])
